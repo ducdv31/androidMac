@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ResponseRecipes.dart';
+part of 'response_recipes.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

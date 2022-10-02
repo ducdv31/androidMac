@@ -1,7 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
-import 'package:recipe/list_recipe/model/ResponseRecipes.dart';
+import 'package:recipe/list_recipe/model/response_recipes.dart';
 
 part 'apiclient.g.dart';
 

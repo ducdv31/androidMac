@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe/utils/const.dart';
 import 'list_recipe/list_recipe_screen.dart';
 
 void main() {
@@ -30,12 +32,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var nameRecipe = Const.EMPTY;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Recipe"), centerTitle: true,),
-      body: const ListRecipeScreen(),
+      appBar: AppBar(
+        title: const Text("Recipe"),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          CupertinoSearchTextField(
+            onChanged: (text) {
+              setState(() {
+                nameRecipe = text;
+              });
+            },
+            onSubmitted: (text) {},
+          ),
+          const SizedBox(height: 16),
+          const Expanded(child: ListRecipeScreen()),
+        ],
+      ),
     );
   }
 }

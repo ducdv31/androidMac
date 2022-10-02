@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:recipe/list_recipe/model/results.dart';
 
-part 'ResponseRecipes.g.dart';
+part 'response_recipes.g.dart';
 
 @JsonSerializable()
 class ResponseRecipe {
