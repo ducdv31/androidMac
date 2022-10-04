@@ -6,7 +6,7 @@ part of 'results.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
+_$_Results _$$_ResultsFromJson(Map<String, dynamic> json) => _$_Results(
       (json['pk'] as num?)?.toDouble(),
       json['title'] as String?,
       json['publisher'] as String?,
@@ -22,7 +22,8 @@ Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
       (json['long_date_updated'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
+Map<String, dynamic> _$$_ResultsToJson(_$_Results instance) =>
+    <String, dynamic>{
       'pk': instance.pk,
       'title': instance.title,
       'publisher': instance.publisher,

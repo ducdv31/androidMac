@@ -23,7 +23,7 @@ class _ListRecipeScreenState extends State<ListRecipeScreen> {
     final dio = Dio();
     dio.options.headers[Const.Authorization] = Apis.TOKEN;
     ApiClient(dio).getListRecipes(page, nameRecipe).then((value) {
-      var results = value.results;
+      var results = value.results ?? <Results>[];
       var isLastPage = results.length < Const.MAX_ITEM;
       if (isLastPage) {
         _pagingController.appendLastPage(results);

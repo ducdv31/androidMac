@@ -6,17 +6,17 @@ part of 'response_recipes.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResponseRecipe _$ResponseRecipeFromJson(Map<String, dynamic> json) =>
-    ResponseRecipe(
-      count: (json['count'] as num).toDouble(),
+_$_ResponseRecipe _$$_ResponseRecipeFromJson(Map<String, dynamic> json) =>
+    _$_ResponseRecipe(
+      count: (json['count'] as num?)?.toDouble() ?? 0,
       next: json['next'] as String?,
       previous: json['previous'] as String?,
-      results: (json['results'] as List<dynamic>)
-          .map((e) => Results.fromJson(e as Map<String, dynamic>))
+      results: (json['results'] as List<dynamic>?)
+          ?.map((e) => Results.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$ResponseRecipeToJson(ResponseRecipe instance) =>
+Map<String, dynamic> _$$_ResponseRecipeToJson(_$_ResponseRecipe instance) =>
     <String, dynamic>{
       'count': instance.count,
       'next': instance.next,
