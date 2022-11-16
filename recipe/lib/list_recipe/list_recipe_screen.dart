@@ -44,15 +44,17 @@ class _ListRecipeScreenState extends State<ListRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width;
     return PagedGridView(
       pagingController: _pagingController,
+      shrinkWrap: true,
       builderDelegate: PagedChildBuilderDelegate<Results>(
         itemBuilder: (context, item, index) => RecipeListItem(results: item),
         newPageProgressIndicatorBuilder: (context) =>
             const CupertinoActivityIndicator(),
       ),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: size ~/ 300,
       ),
     );
   }
