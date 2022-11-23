@@ -1,6 +1,6 @@
 import 'package:demo_flutter/route/app_route.dart';
 import 'package:demo_flutter/screen/common/screen_component.dart';
-import 'package:demo_flutter/screen/recipe/recipe_screen.dart';
+import 'package:demo_flutter/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,11 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(title: "Dang Duc"),
-      body: MaterialApp(
-        initialRoute: AppRoute.home,
-        routes: {
-          AppRoute.home: (BuildContext context) => RecipeScreen(context)
-        },
+      body: SafeArea(
+        child: MaterialApp(
+          initialRoute: AppRoute.home,
+          routes: {AppRoute.home: (BuildContext context) => const MainScreen()},
+        ),
       ),
     );
   }
