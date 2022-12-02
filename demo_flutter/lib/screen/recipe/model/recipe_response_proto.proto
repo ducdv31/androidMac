@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+message RecipeResponseProto {
+  optional int32 count = 1;
+  optional string next = 2;
+  optional string previous = 3;
+  repeated ResultProto results = 4;
+
+  message ResultProto {
+    optional double pk = 1;
+    optional string title = 2;
+    optional string publisher = 3;
+    optional string featured_image = 4;
+    optional int32 rating = 5;
+    optional string source_url = 6;
+    optional string description = 7;
+    repeated string ingredients = 8;
+    optional string date_added = 9;
+    optional string date_updated = 10;
+    optional double long_date_added = 11;
+    optional double long_date_updated = 12;
+  }
+}

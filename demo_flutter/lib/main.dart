@@ -14,32 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar(title: "Dang Duc"),
-      body: SafeArea(
-        child: MaterialApp(
-          initialRoute: AppRoute.home,
-          routes: {AppRoute.home: (BuildContext context) => const MainScreen()},
-        ),
-      ),
+      initialRoute: AppRoute.home,
+      routes: {AppRoute.home: (BuildContext context) => const MainScreen()},
     );
   }
 }

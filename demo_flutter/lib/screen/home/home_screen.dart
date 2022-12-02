@@ -1,5 +1,6 @@
 import 'package:demo_flutter/screen/recipe/recipe_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import '../common/screen_component.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -18,11 +19,16 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      controller: pageController,
-      physics: const AlwaysScrollableScrollPhysics(),
-      onPageChanged: (page) {},
-      children: const [RecipeScreen(), RecipeScreen()],
+    return SafeArea(
+      child: Scaffold(
+        appBar: MyAppBar(title: "Dang Duc"),
+        body: PageView(
+          controller: pageController,
+          physics: const AlwaysScrollableScrollPhysics(),
+          onPageChanged: (page) {},
+          children: const [RecipeScreen(), RecipeScreen()],
+        ),
+      ),
     );
   }
 }

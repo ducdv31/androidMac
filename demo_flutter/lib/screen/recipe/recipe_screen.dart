@@ -4,6 +4,7 @@ import 'package:demo_flutter/screen/recipe/model/result.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:demo_flutter/utils/constant.dart';
+import 'package:flutter/material.dart';
 
 class RecipeScreen extends StatefulWidget {
   const RecipeScreen({Key? key}) : super(key: key);
@@ -54,12 +55,13 @@ class ListRecipeView extends StatefulWidget {
 class _ListRecipeViewState extends State<ListRecipeView> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: width ~/ 400,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
         ),
+        physics: const BouncingScrollPhysics(),
         itemCount: widget.listData?.length ?? 0,
+        shrinkWrap: true,
         itemBuilder: (context, index) {
           Result? result = widget.listData?.elementAt(index);
           return ItemRecipe(result: result);
@@ -80,24 +82,29 @@ class _ItemRecipeState extends State<ItemRecipe> {
   Widget build(BuildContext context) {
     var result = widget.result;
     return Expanded(
-      child: ListView(
-        shrinkWrap: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AspectRatio(
-            aspectRatio: 1 / 1,
+          Expanded(
             child: CachedNetworkImage(
               imageUrl: result?.featured_image ?? "",
               placeholder: (context, url) {
                 return const CupertinoActivityIndicator();
               },
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               cacheKey: result?.featured_image,
             ),
           ),
           Text(
             result?.title ?? "",
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+              fontWeight: FontWeight.normal,
+              decoration: TextDecoration.none,
+            ),
+            textAlign: TextAlign.center,
           )
         ],
       ),

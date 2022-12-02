@@ -39,6 +39,7 @@ dependencies:
   freezed_annotation:
   dio:
   cached_network_image:
+  protoc_plugin: ^20.0.1
 
 dev_dependencies:
   flutter_test:
