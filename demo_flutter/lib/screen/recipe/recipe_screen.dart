@@ -1,9 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:demo_flutter/screen/common/image_component.dart';
+import 'package:demo_flutter/screen/common/text_component.dart';
 import 'package:demo_flutter/screen/recipe/api/recipe_rest_client.dart';
 import 'package:demo_flutter/screen/recipe/model/result.dart';
+import 'package:demo_flutter/utils/constant.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:demo_flutter/utils/constant.dart';
 import 'package:flutter/material.dart';
 
 class RecipeScreen extends StatefulWidget {
@@ -58,20 +59,25 @@ class _ListRecipeViewState extends State<ListRecipeView> {
     return GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
+          mainAxisSpacing: 4,
         ),
         physics: const BouncingScrollPhysics(),
         itemCount: widget.listData?.length ?? 0,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           Result? result = widget.listData?.elementAt(index);
-          return ItemRecipe(result: result);
+          return ItemRecipe(
+            result: result,
+            onTap: (result) {},
+          );
         });
   }
 }
 
 class ItemRecipe extends StatefulWidget {
-  const ItemRecipe({Key? key, this.result}) : super(key: key);
+  const ItemRecipe({Key? key, this.result, this.onTap}) : super(key: key);
   final Result? result;
+  final ValueSetter<Result?>? onTap;
 
   @override
   State<ItemRecipe> createState() => _ItemRecipeState();
@@ -81,32 +87,23 @@ class _ItemRecipeState extends State<ItemRecipe> {
   @override
   Widget build(BuildContext context) {
     var result = widget.result;
+    var onTapItem = widget.onTap;
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: CachedNetworkImage(
-              imageUrl: result?.featured_image ?? "",
-              placeholder: (context, url) {
-                return const CupertinoActivityIndicator();
-              },
-              fit: BoxFit.cover,
-              cacheKey: result?.featured_image,
-            ),
-          ),
-          Text(
-            result?.title ?? "",
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black,
-              fontWeight: FontWeight.normal,
-              decoration: TextDecoration.none,
-            ),
-            textAlign: TextAlign.center,
-          )
-        ],
+      child: InkWell(
+        onTap: () {
+          onTapItem?.call(result);
+        },
+        borderRadius: BorderRadius.circular(cornerImageCommon),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(child: ImageNetwork(imgSrc: result?.featured_image)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TextBlack16(text: result?.title),
+            )
+          ],
+        ),
       ),
     );
   }
