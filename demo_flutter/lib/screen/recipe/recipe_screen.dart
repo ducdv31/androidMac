@@ -1,9 +1,8 @@
 import 'package:demo_flutter/screen/common/image_component.dart';
 import 'package:demo_flutter/screen/common/text_component.dart';
-import 'package:demo_flutter/screen/recipe/api/recipe_rest_client.dart';
 import 'package:demo_flutter/screen/recipe/model/result.dart';
+import 'package:demo_flutter/screen/recipe/viewmodel/recipe_viewmodel.dart';
 import 'package:demo_flutter/utils/constant.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,32 +14,54 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
+  final TextEditingController searchController = TextEditingController();
+  final recipeViewModel = RecipeViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      recipeViewModel.searchSink.add(searchController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    recipeViewModel.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: FutureBuilder(
-          future: searchRecipe(),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Result>?> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CupertinoActivityIndicator();
-            }
-            if (snapshot.hasData) {
-              return ListRecipeView(
-                listData: snapshot.data,
-              );
-            }
-            return const CupertinoActivityIndicator();
-          }),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+            child: MySearchView(
+              textController: searchController,
+              labelText: "Search",
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder<List<Result>?>(
+                stream: recipeViewModel.listRecipeStream,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CupertinoActivityIndicator();
+                  }
+                  if (snapshot.hasData) {
+                    return ListRecipeView(
+                      listData: snapshot.data,
+                    );
+                  }
+                  return const CupertinoActivityIndicator();
+                }),
+          ),
+        ],
+      ),
     );
-  }
-
-  Future<List<Result>?> searchRecipe() async {
-    final dio = Dio();
-    dio.options.headers[authorization] = token;
-    final client = RecipeRestClient(dio);
-    var response = await client.searchRecipe(1, "");
-    return response.results;
   }
 }
 

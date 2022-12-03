@@ -19,15 +19,13 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: MyAppBar(title: "Dang Duc"),
-        body: PageView(
-          controller: pageController,
-          physics: const AlwaysScrollableScrollPhysics(),
-          onPageChanged: (page) {},
-          children: const [RecipeScreen(), RecipeScreen()],
-        ),
+    return Scaffold(
+      appBar: const MyAppBar(title: "Dang Duc"),
+      body: PageView(
+        controller: pageController,
+        physics: const AlwaysScrollableScrollPhysics(),
+        onPageChanged: (page) {},
+        children: const [RecipeScreen(), RecipeScreen()],
       ),
     );
   }

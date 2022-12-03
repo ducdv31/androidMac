@@ -40,6 +40,7 @@ dependencies:
   dio:
   cached_network_image:
   protoc_plugin: ^20.0.1
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
