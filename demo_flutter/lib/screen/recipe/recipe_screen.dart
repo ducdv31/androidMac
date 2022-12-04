@@ -13,7 +13,8 @@ class RecipeScreen extends StatefulWidget {
   State<RecipeScreen> createState() => _RecipeScreenState();
 }
 
-class _RecipeScreenState extends State<RecipeScreen> {
+class _RecipeScreenState extends State<RecipeScreen>
+    with AutomaticKeepAliveClientMixin<RecipeScreen> {
   final TextEditingController searchController = TextEditingController();
   final recipeViewModel = RecipeViewModel();
 
@@ -33,6 +34,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -63,6 +65,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class ListRecipeView extends StatefulWidget {
