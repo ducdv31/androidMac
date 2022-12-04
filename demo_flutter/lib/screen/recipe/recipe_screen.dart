@@ -21,6 +21,7 @@ class _RecipeScreenState extends State<RecipeScreen>
   @override
   void initState() {
     super.initState();
+    recipeViewModel.searchSink.add("");
     searchController.addListener(() {
       recipeViewModel.searchSink.add(searchController.text);
     });
