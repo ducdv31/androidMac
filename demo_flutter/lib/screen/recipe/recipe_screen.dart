@@ -17,13 +17,26 @@ class _RecipeScreenState extends State<RecipeScreen>
     with AutomaticKeepAliveClientMixin<RecipeScreen> {
   final TextEditingController searchController = TextEditingController();
   final recipeViewModel = RecipeViewModel();
+  final scrollRecipeController = ScrollController();
+  var page = 1;
 
   @override
   void initState() {
     super.initState();
     recipeViewModel.searchSink.add("");
     searchController.addListener(() {
+      page = 1;
       recipeViewModel.searchSink.add(searchController.text);
+    });
+
+    scrollRecipeController.addListener(() {
+      if (scrollRecipeController.position.atEdge) {
+        var isTop = scrollRecipeController.position.pixels == 0;
+        if (!isTop) {
+          page++;
+          recipeViewModel.searchRecipe(page, searchController.text, true);
+        }
+      }
     });
   }
 
@@ -51,12 +64,14 @@ class _RecipeScreenState extends State<RecipeScreen>
             child: StreamBuilder<List<Result>?>(
                 stream: recipeViewModel.listRecipeStream,
                 builder: (context, snapshot) {
+                  print("length ${snapshot.data?.length}");
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CupertinoActivityIndicator();
                   }
                   if (snapshot.hasData) {
                     return ListRecipeView(
                       listData: snapshot.data,
+                      scrollController: scrollRecipeController,
                     );
                   }
                   return const CupertinoActivityIndicator();
@@ -72,9 +87,14 @@ class _RecipeScreenState extends State<RecipeScreen>
 }
 
 class ListRecipeView extends StatefulWidget {
-  const ListRecipeView({this.listData, Key? key}) : super(key: key);
+  const ListRecipeView({
+    this.listData,
+    Key? key,
+    this.scrollController,
+  }) : super(key: key);
 
   final List<Result>? listData;
+  final ScrollController? scrollController;
 
   @override
   State<ListRecipeView> createState() => _ListRecipeViewState();
@@ -84,6 +104,7 @@ class _ListRecipeViewState extends State<ListRecipeView> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+        controller: widget.scrollController,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 4,

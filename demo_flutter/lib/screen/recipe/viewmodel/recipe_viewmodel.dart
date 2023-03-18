@@ -15,22 +15,27 @@ class RecipeViewModel {
 
   Stream<List<Result>?> get listRecipeStream => _listResultObj.stream;
 
+  List<Result>? listData = [];
+
   RecipeViewModel() {
     _searchSbj
         .debounceTime(const Duration(milliseconds: 500))
         .listen((searchKey) {
-      searchRecipe(1, searchKey).then((listData) {
-        listRecipeSink.add(listData);
-      });
+      searchRecipe(1, searchKey, false);
     });
   }
 
-  Future<List<Result>?> searchRecipe(int page, String? query) async {
+  void searchRecipe(int page, String? query, bool isLoadMore) async {
     final dio = Dio();
     dio.options.headers[authorization] = token;
     final client = RecipeRestClient(dio);
     var response = await client.searchRecipe(page, query ?? "");
-    return response.results;
+    if (!isLoadMore) {
+      listData = response.results;
+    } else {
+      listData?.addAll(response.results ?? []);
+    }
+    listRecipeSink.add(listData);
   }
 
   dispose() {

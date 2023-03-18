@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,
+        useMaterial3: true
       ),
       initialRoute: AppRoute.home,
       routes: {AppRoute.home: (BuildContext context) => const MainScreen()},
