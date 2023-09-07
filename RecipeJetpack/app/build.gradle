@@ -92,6 +92,8 @@ dependencies {
 
     def swipe_refresh = "0.27.1"
     implementation "com.google.accompanist:accompanist-swiperefresh:$swipe_refresh"
+
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 }
 
 // Allow references to generated code
