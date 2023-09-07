@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getSystemService
 import com.ducdv.testshoto.databinding.FragmentCameraExtBinding
+import com.ducdv.testshoto.ext.getCameraIdList
 import com.ducdv.testshoto.ext.lgScreen
 import com.ducdv.testshoto.ext.showToast
 import com.jiangdg.ausbc.MultiCameraClient
@@ -102,20 +103,7 @@ class CameraExtFragment : CameraFragment() {
 
     override fun onResume() {
         super.onResume()
-        lgScreen(getCurrentCamera().toString(), getCameraIdList().toString())
+        lgScreen(getCurrentCamera().toString(), context?.getCameraIdList().toString())
     }
 
-    private fun getCameraIdList(): List<String>? {
-        val cameraIdList: MutableList<String> = ArrayList()
-        val cameraManager = getSystemService(requireContext(), CameraManager::class.java) as CameraManager?
-        try {
-            val cameraIds = cameraManager!!.cameraIdList
-            for (cameraId in cameraIds) {
-                cameraIdList.add(cameraId)
-            }
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-        }
-        return cameraIdList
-    }
 }
