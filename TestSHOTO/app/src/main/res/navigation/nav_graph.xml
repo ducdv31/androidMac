@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/cameraExtFragment">
+
+
+    <fragment
+        android:id="@+id/cameraExtFragment"
+        android:name="com.ducdv.testshoto.ui.camera.CameraExtFragment"
+        android:label="fragment_camera_ext"
+        tools:layout="@layout/fragment_camera_ext" />
+</navigation>
